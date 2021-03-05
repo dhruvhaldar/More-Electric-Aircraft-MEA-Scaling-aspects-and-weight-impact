@@ -1758,12 +1758,17 @@ Very time consuming since orthogonal quality is difficult to achieve in 3D meshi
 \subsection{Gmsh Geometry Automation} \label{subsec:gmsh_geometry}
 MATLAB Code
 \subsection{IronPython Geometry Automation} \label{subsec:ironpython_geometry}
+The default airfoil coordinate file that was generated from XFoil consists of two columns relating to the x and y coordinates. In order to make the file compatible with IronPython, a modified airfoil file consisting of placeholders and curve name was generated. A new command was added to the first line of the script \lstinline{Polyline=True}. The \lstinline{Polyline} command created a 2D spline curve out of the data points (Airfoil Coordinates). For the \lstinline{Polyline} command to work, the first column in the data points (Airfoil Coordinates) shall have integer values. Thus, the first column consisted of the curve number (1 in our case).
+
+
+\todo[inline, backgroundcolor=aqua]{cite ironpython code}
 \subsection{Gmsh Meshing} \ref{dhruvmatlabcode} Unfortunately, Gmsh file couldn't be used in the ANSYS model.
 \subsection{Gmsh Meshing Automation} \label{subsec:gmsh_mesh}
 \subsubsection{Gmsh Enclosure Automation}
 \subsubsection{Gmsh Surface Automation}
-\subsection{ANSYS Workbench Journal Scripting Automation}
-\subsection{SpaceClaim Meshing Automation}
+\subsection{ANSYS SpaceClaim Mesh Scripting Automation}
+By default, the IronPython SpaceClaim scripting works only for geometry creation. Yet, there was an option to enable meshing automation inside SpaceClaim itself. The meshing method had very limited and basic features, as it was meant for simpler objects (geometries). The command \lstinline{SetFaceMeshTypeOptions()} was used to enable meshing and set the meshing options supported in the ANSYS Meshing software (separate software package inside ANSYS). The \lstinline{SetFaceMeshTypeOptions()} command seemed to work in the initial iteration of geometries made. However since the SpaceClaim mesh compiler was bleeding-edge, the compiler kept on crashing. This became more prevalent as the newer iterations made the airfoil geometry more complicated. Hence, the utilization of SpaceClaim scripting for meshing automation was dropped. However, the compiler should work fine as the product gets developed in further releases of the ANSYS Software package. An example of a meshing block which was used in the initial iterations for geometry creation is included in . 
+
 \subsection{Mesh Optimization} Mesh size, orthogonal quality, $y+$ value, OPTIGRID
 
 \subsection{IPS Implementation and Calculation}
@@ -3040,6 +3045,7 @@ För IPS
 \end{swedishnotes}
 
 \section{Future work}
+Workbench Journal Scripting
 \todo[inline]{Describe valid future work that you or someone else could or should do.\\
 Consider: What you have left undone? What are the next obvious things to be done? What hints can you give to the next person who is going to follow up on your work?
 }
@@ -3303,12 +3309,12 @@ done. ...
 
 
 \clearpage
-\section{MATLAB Code}
+\section{Code}
 \label{sec:AppMatlab}
 
 Listing~\ref{lst:codeexample} is showing a code example in MATLAB format.
 
-\begin{lstlisting}[caption={Fuel calculations.}, label=lst:codeexample]
+\begin{lstlisting}[caption={MATLAB Code for Fuel calculations.}, label=lst:codeexample]
 % Testing to include MATLAB code in LaTeX
 % ####### VCM ECS fuel consumption #######
 if mode == 1
@@ -3334,11 +3340,13 @@ else % Statis on ground. Connected to ground power.
 end
 \end{lstlisting}
 
-\lstinputlisting[caption={Geometry and Mesh Automation using XFoil and Gmsh.}, label=dhruvmatlabcode]{Dhruv_Part1_rev4_live.M}
+\lstinputlisting[caption={MATLAB Code : Geometry and Mesh Automation using XFoil and Gmsh.}, label=dhruvmatlabcode]{IPS/Dhruv_Part1_rev4_live.M}
 
-\label{pg:lastPageofMainmatter}
 
-\todo {IronPython code for one geometry}
+\lstinputlisting[caption={Iron Python Code for climb case study}, label=dhruvpythoncode1]{IPS/IronPython1.tex}
+
+
+\lstinputlisting[caption={Sample Iron Python Code block for meshing}, label=dhruvpythoncode2]{IPS/IronPython2.tex}
 
 \clearpage
 \section*{For DIVA}

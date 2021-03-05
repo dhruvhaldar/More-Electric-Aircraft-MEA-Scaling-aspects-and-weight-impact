@@ -1,0 +1,61 @@
+################################### Meshing
+
+# Init MeshSettings
+physicsType = PhysicsType.FluidDynamics
+result = InitMeshSettings.Execute(physicsType)
+# EndBlock
+############################### Size Control 
+
+# Create Size Control for circle face
+options = CreateFaceSizeControlOptions()
+options.ElementSize = 0.1
+options.DefeatureSize = -2
+options.GrowthRate = 1.2
+options.NumCellsAcrossGap = 4
+options.GrowthHeight = None
+options.SizeFunction = SizeFunctionType.CurvatureAndProximity
+options.CurvatureNormalAngle = None
+options.ProximityDirection = None
+options.ProximityMinSize = 0.0503200381843556
+options.ProximitySizeFunctionSource = None
+options.CurvatureMinSize = 0.0503200381843556
+options.ProximitySizeFunctionSource =
+ProximitySizeFunctionSourcesType.FacesAndEdges
+faceSelection = FaceSelection.CreateByGroups(
+    SelectionType.Primary, 
+                                             "Circle Faces")
+result = CreateFaceSizeControl.Execute(
+    faceSelection, options)
+# EndBlock
+############## Mesh Edits compile line by line
+#Circle Mesh
+# Set Face Mesh Type circle faces
+options = SetFaceMeshTypeOptions()
+options.Method = MapMeshMethod.MappedTriangles
+#options.NumberDivisions = 100
+faceSelection = FaceSelection.Create(
+    [GetRootPart().Bodies[1].Faces[291],
+    GetRootPart().Bodies[1].Faces[302]])
+cornerPoints = Selection.Empty()
+sidePoints = Selection.Empty()
+endPoints = Selection.Empty()
+result = SetFaceMeshType.Execute(
+    faceSelection, cornerPoints,
+    sidePoints, endPoints, options)
+# EndBlock
+
+# Create/Edit Mesh circle faces
+options = CreateMeshOptions()
+#options.SolidElementShape = ElementShapeType.Hexahedral
+#options.SurfaceElementShape = ElementShapeType.Tetrahedral
+options.BlockingType = BlockingDecompositionType.Aggressive
+options.MidsideNodes = MidsideNodesType.BasedOnPhysics
+options.ConnectTolerance = 0.01
+bodySelection = FaceSelection.Create(
+    [GetRootPart().Bodies[1].Faces[291],
+    GetRootPart().Bodies[1].Faces[302]])
+sweepFaceSelection = Selection.Empty()
+result = CreateMesh.Execute(
+    bodySelection, 
+    sweepFaceSelection, options)
+# EndBlock

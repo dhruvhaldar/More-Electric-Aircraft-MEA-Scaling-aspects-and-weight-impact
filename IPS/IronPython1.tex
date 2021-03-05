@@ -1,0 +1,315 @@
+# Python Script, API Version = V20 Beta
+# Insert From File
+importOptions = ImportOptions.Create()
+DocumentInsert.Execute(r"C:\Users\dhruv\Downloads\naca24012_closededge_spaceclaim-corrected.txt", importOptions, GetMaps("08867389"))
+# EndBlock
+
+#Parametric Variables
+#front_x=Parameters.front_x
+front_x=1
+#front_y=Parameters.front_y
+front_y=0.001575
+#front_z=Parameters.front_z
+front_z=0
+#origin_x=Parameters.origin_x
+origin_x=0
+#origin_y=Parameters.origin_y
+origin_y=0
+# Set Sketch Plane
+sectionPlane = Plane.Create(Frame.Create
+                            (Point.Create(M(front_x), 
+                            M(front_y), M(front_z)), 
+-Direction.DirX, 
+Direction.DirY))
+result = ViewHelper.SetSketchPlane(sectionPlane, None)
+
+curve_number=0
+
+
+# EndBlock
+
+
+# Set New Sketch
+result = SketchHelper.StartConstraintSketching()
+# EndBlock
+
+# Set Sketch Plane
+selection = Curve1
+result = ViewHelper.SetSketchPlane(selection, Info1)
+selection = DatumPlane1
+result = RenameObject.Execute(selection,"Front")
+# EndBlock
+
+
+# Rename 'Curve 1' to 'Airfoil Curve'
+selection = Curve1
+result = RenameObject.Execute(selection,"Airfoil Curve")
+# EndBlock
+
+
+
+
+# Sketch Line (Fix Trailing edge, close airfoil geometry)
+start = Point2D.Create(MM(0.248000000000026), MM(-1.604))
+end = Point2D.Create(MM(0), MM(-1.57499999999999))
+result = SketchLine.Create(start, end)
+# EndBlock
+
+
+# Fill
+selection = Selection.Create(Curve2, Curve3)
+secondarySelection = Selection.Empty()
+options = FillOptions()
+options.AutoExtendFillArea = False
+options.PatchBlend = False
+options.ZipLaminarEdges = False
+options.GapAngle = DEG(10)
+options.GapDistance = M(0.0001)
+options.UntrimSingleFace = True
+options.AllowMultiFacePatch = False
+result = Fill.Execute(selection, 
+                      secondarySelection, options, 
+                      FillMode.Sketch, Info2)
+# EndBlock
+
+
+# Rename 'Surface' to 'Airfoil Surface'
+selection = Body1
+result = RenameObject.Execute(selection,"Airfoil Surface")
+# EndBlock
+
+
+# Create Named Selection Group
+primarySelection = BodySelection.Create(
+    GetRootPart().Bodies[0])
+secondarySelection = Selection.Empty()
+result = NamedSelection.Create(
+    primarySelection, secondarySelection)
+# EndBlock
+
+
+# Rename Named Selection
+result = NamedSelection.Rename("Group1", "Airfoil Surface")
+# EndBlock
+
+
+############################# Supression
+
+
+# Create Named Selection Group
+primarySelection = Selection.Create(
+    GetRootPart().DatumPlanes[0])
+secondarySelection = Selection.Empty()
+result = NamedSelection.Create(
+    primarySelection, secondarySelection)
+result = NamedSelection.Rename("Group1", "Datum Plane 0")
+# EndBlock
+
+
+
+
+# Exclude items from physics
+selection = Selection.CreateByGroups(
+    SelectionType.Primary, "Datum Plane 0")
+suppress = True
+ViewHelper.SetSuppressForPhysics(
+    selection, suppress)
+# EndBlock
+
+
+# Create Super Sketch
+datumForSketch = Selection.Create(
+    GetRootPart().DatumPlanes[0])
+result = SketchPlane.CreateSketch(
+    datumForSketch)
+# EndBlock
+
+
+############################### Farfield
+# Sketch Line 1 height 20m wall dis 10m
+chordlen=1000
+height=20000
+wall_distance=10000
+wall_distance=wall_distance-chordlen
+
+
+# Create Origin
+origin = Point.Create(MM(1000), MM(0), MM(0))
+x_Direction = -Direction.DirX
+y_Direction = Direction.DirY
+result = DatumOriginCreator.Create(
+    origin, x_Direction, y_Direction, None)
+# EndBlock
+
+
+# Sketch Rectangle
+point1 = Point2D.Create(MM(-10000), MM(5000))
+point2 = Point2D.Create(MM(-10000), MM(-5000))
+point3 = Point2D.Create(MM(5000), MM(5000))
+result = SketchRectangle.Create(point1, point2, point3)
+# EndBlock
+
+
+# Fill 
+selection = Selection.Create(
+    Curve4, Curve5, Curve6, Curve7)
+secondarySelection = Selection.Empty()
+options = FillOptions()
+options.AutoExtendFillArea = False
+options.PatchBlend = False
+options.ZipLaminarEdges = False
+options.GapAngle = DEG(10)
+options.GapDistance = MM(0.1)
+options.UntrimSingleFace = True
+options.AllowMultiFacePatch = False
+result = Fill.Execute(selection, 
+                      secondarySelection, 
+                      options, FillMode.Layout, None)
+# EndBlock
+
+
+# Rename 'Surface' to 'Enclosure Surface'
+selection = BodySelection.Create(
+    GetRootPart().Bodies[1])
+result = RenameObject.Execute(
+    selection,"Enclosure Surface")
+# EndBlock
+
+
+#refinement guidelines
+# Solidify Sketch
+mode = InteractionMode.Solid
+result = ViewHelper.SetViewMode(mode, None)
+# EndBlock
+
+
+# Create Super Sketch
+datumForSketch = Selection.Create(
+    GetRootPart().DatumPlanes[0])
+result = SketchPlane.CreateSketch(
+    datumForSketch)
+# EndBlock
+
+
+# Sketch Line
+start = Point2D.Create(MM(1341), MM(300))
+end = Point2D.Create(MM(-927), MM(300))
+result = SketchLine.Create(start, end)
+# EndBlock
+
+
+# Sketch Line
+start = Point2D.Create(MM(1341), MM(-300))
+end = Point2D.Create(MM(-927), MM(-300))
+result = SketchLine.Create(start, end)
+# EndBlock
+
+
+# Create Sweep Arc
+origin = Point2D.Create(MM(1341), MM(0))
+start = Point2D.Create(MM(1341), MM(300))
+end = Point2D.Create(MM(1341), MM(-300))
+senseClockWise = True
+result = SketchArc.CreateSweepArc(
+    origin, start, end, 
+    senseClockWise)
+# EndBlock
+
+
+# Create Sweep Arc
+origin = Point2D.Create(MM(-927), MM(0))
+start = Point2D.Create(MM(-927), MM(300))
+end = Point2D.Create(MM(-927), MM(-300))
+senseClockWise = False
+result = SketchArc.CreateSweepArc(
+    origin, start, end, senseClockWise)
+# EndBlock
+
+
+
+# Fill
+selection = Selection.Create(
+    Curve16, Curve17, Curve18, Curve19)
+secondarySelection = Selection.Empty()
+options = FillOptions()
+options.AutoExtendFillArea = False
+options.PatchBlend = False
+options.ZipLaminarEdges = False
+options.GapAngle = DEG(10)
+options.GapDistance = MM(0.1)
+options.UntrimSingleFace = True
+options.AllowMultiFacePatch = False
+result = Fill.Execute(selection, 
+                      secondarySelection, 
+                      options, FillMode.Layout, Info9)
+# EndBlock
+
+# Rename 'Surface' to 'Refinement Surface'
+selection = Body3
+result = RenameObject.Execute(
+    selection,"Refinement Surface")
+# EndBlock
+
+
+# Solidify Sketch
+mode = InteractionMode.Solid
+result = ViewHelper.SetViewMode(mode, Info10)
+# EndBlock
+
+# Extrude 1 Face
+selection = Face5
+options = ExtrudeFaceOptions()
+options.KeepMirror = True
+options.KeepLayoutSurfaces = False
+options.KeepCompositeFaceRelationships = True
+options.PullSymmetric = False
+options.OffsetMode = OffsetMode.IgnoreRelationships
+options.Copy = False
+options.ForceDoAsExtrude = False
+options.ExtrudeType = ExtrudeType.Add
+result = ExtrudeFaces.Execute(
+    selection, MM(-500), options, Info11)
+# EndBlock
+
+# Extrude 1 Face airfoil boolean substraction
+selection = Face6
+options = ExtrudeFaceOptions()
+options.KeepMirror = True
+options.KeepLayoutSurfaces = False
+options.KeepCompositeFaceRelationships = True
+options.PullSymmetric = False
+options.OffsetMode = OffsetMode.IgnoreRelationships
+options.Copy = False
+options.ForceDoAsExtrude = False
+options.ExtrudeType = ExtrudeType.Cut
+result = ExtrudeFaces.Execute(
+    selection, MM(500), options, Info12)
+# EndBlock
+
+
+# Rename 'Solid' to 'Fluid Domain'
+selection = Body4
+result = RenameObject.Execute(
+    selection,"Fluid Domain")
+# EndBlock
+
+# Extrude 1 Face Refinement surface
+selection = Face7
+options = ExtrudeFaceOptions()
+options.KeepMirror = True
+options.KeepLayoutSurfaces = False
+options.KeepCompositeFaceRelationships = True
+options.PullSymmetric = False
+options.OffsetMode = OffsetMode.IgnoreRelationships
+options.Copy = False
+options.ForceDoAsExtrude = False
+options.ExtrudeType = ExtrudeType.ForceIndependent
+result = ExtrudeFaces.Execute(
+    selection, MM(500), options, Info13)
+# EndBlock
+
+# Rename 'Solid' to 'Refinement Solid'
+selection = Body5
+result = RenameObject.Execute(
+    selection,"Refinement Solid")
+# EndBlock
