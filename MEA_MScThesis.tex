@@ -1299,7 +1299,7 @@ Drop median volumetric or otherwise called as median droplet diameter, refers to
 It is necessary to know the droplets' size to explain and predict icing simulations accurately. Langmuir and Blodgett (1946) proposed a monodisperse droplet distribution in which half of the droplets had a smaller radius and the other half a larger radius in the fog. Monodispersion is a commonly used method and has been chosen as one of the input icing design parameters. Additionally,  Langmuir D distribution is selected as paramater for one of the icing simulation. Figure~\ref{fig:LangmuirD} shows the collection efficiency of droplets under Langmuir D distribution. 
 
 \subsection{Droplet Impingement}
-In order to evaluate the thermal inputs for removing ice accumulation, the design of ice protection systems includes awareness of local and total impingement intensities. Experiments have been performed in the past by NASA Glenn Research Center and at the FAA Technical Center. In a typical experiment setup, the data is captured through a Charge Coupled Device Camera. These devices specialize in capturing highly sensitive optical signals. Analysis is typically performed on components such as Finite Wings, Inlets of engines and Airfoils, The droplet distribution is around a \acrshort{mvd} of \SI{16,5}{\micro\metre} and \SI{20,4}{\micro\metre}. Droplet impingement is mathematically characterized by the Collection efficiency. The collection efficiency is the fraction of liquid water in the path of an aircraft component that, when traveling in icing conditions, is accumulated as ice on that component \cite{skybrary}. 
+In order to evaluate the thermal inputs for removing ice accumulation, the design of ice protection systems includes awareness of local and total impingement intensities. Experiments have been performed in the past by NASA Glenn Research Center and at the FAA Technical Center. In a typical experiment setup, the data is captured through a Charge Coupled Device Camera. These devices specialize in capturing highly sensitive optical signals. Analysis is typically performed on components such as Finite Wings, Inlets of engines and Airfoils. The droplet distribution is around a \acrshort{mvd} of \SI{16,5}{\micro\metre} and \SI{20,4}{\micro\metre}. Droplet impingement is mathematically characterized by the Collection efficiency. The collection efficiency is the fraction of liquid water in the path of an aircraft component that, when traveling in icing conditions, is accumulated as ice on that component \cite{skybrary}. 
 
 
 \subsection{Liquid Water Content (\acrshort{lwc})}
@@ -1348,7 +1348,7 @@ Based on the Appendix C, we have the following parameters for intermittent maxim
 %########################################################################################
 \chapter{Ice Protection System}
 \label{ch:IPS}
-This chapter a comprehensive overview of the Ice Protection System (\acrshort{ips}) and its types. Additionally, it describes the factors that influence \acrshort{ips} power consumption.
+This chapter gives a comprehensive overview of the Ice Protection System (\acrshort{ips}) and its types. Additionally, it describes the factors that influence \acrshort{ips} power consumption.
 \subsection{Mechanism of Ice Protection}
 \label{subsec:Icingmech}
 In certain situations, snow and ice protection can also be provided to the aircraft when it is not in flight (or grounded) by spraying Type 1 Fluid diluted with water. The Type I fluid consists of propylene glycol, which is heated to a termperature of 60 to 65 \degree C. The system that operates to remove ice buildup is called a de-icing system. In contrast, the system used to avoid ice buildup formation is called an anti-icing system. For the anti-icing system, the fluid used is Type IV, which is a more viscous version of Type I, not mixed with water. Propylene glycol is non-toxic, whereas Ethylene glycol, another lesser-known substance used, is toxic. The pilots disable the aircraft's ventilation system to prevent fluid fumes from entering inside during the application of Type I and Type IV Fluids. \textit{Type IV fluids gradually lose effectiveness during flight, and this is where the standard electrothermal and pneumatic ice protection systems come into play} \cite{Arnot2018}. Thermal \acrshort{ips} constitute one of the most common systems used for aircraft surfaces vulnerable to ice build-up. The \acrshort{ips} systems operate in {Running-wet} air mode that amplifies the energy demand \cite{khalil2}. In the running-wet mode, the temperature of the contact region has to be higher than 0 \degree C thereby maintaining a heavy dependency on the ambient climate temperature, normally between 0.6° and 7.2°C, and this results in a very high power demand of 16.4 kW to 26.4 kW/m2.
@@ -1758,10 +1758,15 @@ Very time consuming since orthogonal quality is difficult to achieve in 3D meshi
 \subsection{Gmsh Geometry Automation} \label{subsec:gmsh_geometry}
 MATLAB Code
 \subsection{IronPython Geometry Automation} \label{subsec:ironpython_geometry}
-The default airfoil coordinate file that was generated from XFoil consists of two columns relating to the x and y coordinates. In order to make the file compatible with IronPython, a modified airfoil file consisting of placeholders and curve name was generated. A new command was added to the first line of the script \lstinline{Polyline=True}. The \lstinline{Polyline} command created a 2D spline curve out of the data points (Airfoil Coordinates). For the \lstinline{Polyline} command to work, the first column in the data points (Airfoil Coordinates) shall have integer values. Thus, the first column consisted of the curve number (1 in our case).
+The default airfoil coordinate file that was generated from XFoil consists of two columns relating to the x and y coordinates. In order to make the file compatible with IronPython, a modified airfoil file consisting of placeholders and curve name was generated. A new command was added to the first line of the script \lstinline{Polyline=True}. The \lstinline{Polyline} command created a 2D spline curve out of the data points (Airfoil Coordinates). For the \lstinline{Polyline} command to work, the first column in the data points (Airfoil Coordinates) shall have integer values. Thus, the first column consisted of the curve number (1 in our case). This is represented in Figure \ref{fig:airscript}. Additionally, the coordinates were scaled by 1000 since the SpaceClaim user interface by default has mm as the set unit of length. \hfill \break
+The modified script was then imported into the IronPython script as a part file. There are two ways for running the script. First is in debug mode, where the compiler runs the script line-by-line. Second, the program runs the entire script all at once. These two options are important to differentiate since the IronPython compiler is bleeding-edge, sometimes one worked better over the other. \lstinline{Fit=True} could also be added to Curve fit the coordinate points within a specified tolerance \lstinline{Fittol}.
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\textwidth]{IPS/notepad++_woSEXWc0kh.png}
+    \caption{Modified Script vs Original NACA 24012 Airfoil.}
+    \label{fig:airscript}
+\end{figure}
 
-
-\todo[inline, backgroundcolor=aqua]{cite ironpython code}
 \subsection{Gmsh Meshing} \ref{dhruvmatlabcode} Unfortunately, Gmsh file couldn't be used in the ANSYS model.
 \subsection{Gmsh Meshing Automation} \label{subsec:gmsh_mesh}
 \subsubsection{Gmsh Enclosure Automation}
@@ -1793,7 +1798,7 @@ The CFM56-5B is a high bypass ratio turbofan engine with two concentric spools. 
 %\todo[inline, backgroundcolor=aqua]{Engine maps. Show how bleed temperature is a function of thrust.}
 %\todo[inline, backgroundcolor=aqua]{Include picture.}
 A way to describe the characteristics of a turbojet engine is to use compressor maps and turbine maps. Since we are only interested in bleed temperature from the compressor stages, we will only use compressor maps. Relevant maps for the CFM56-5B can be seen in figure \ref{fig:CFM56-5BMaps}.
-\todo[inline, backgroundcolor=aqua]{Show maps for Fan, LPC and HPC. With extrapolated operation points.}
+%\todo[inline, backgroundcolor=aqua]{Show maps for Fan, LPC and HPC. With extrapolated operation points.}
 
 \begin{figure}[hb]
     \centering
@@ -1834,10 +1839,21 @@ To limit the amount of work, operation lines are kept static according to figure
 
 \clearpage
 
-\section{Air Mass Flow Rate}
+\section{Engine Air Mass Flow Rate}
 
-To calculate thrust, air mass flow rate through the engine must first be derived. The table in figure \ref{fig:CFM56-5B4GasturbTable} provides air mass flow rate, W2, for several different conditions. Now we need to see if it relates to anything. The goal is to use input from a flight condition to predict the air mass flow rate.
-\todo[inline, backgroundcolor=aqua]{Insert table CFM56-5B4GasturbTable.}
+To calculate thrust, air mass flow rate through the engine must first be derived. The table in figure \ref{fig:CFM56-5B4GasturbTable} provides the real air mass flow rate, W2, for several different conditions. Now we need to see if it relates to anything. The goal is to use input from a flight condition to predict the engine air mass flow rate.
+%\todo[inline, backgroundcolor=aqua]{Insert table CFM56-5B4GasturbTable.}
+
+\begin{figure}[hb]
+    \centering
+    \includegraphics[width=1\textwidth]{Epictures/CFM56-5B4 GasTurb Data Fehrm.png}
+    \caption{CFM56-5B4 engine simulation data. Amended from Fehrm, 2017, \cite{Fehrm2017}.}
+    \label{fig:CFM56-5B4GasturbTable}
+\end{figure}
+
+
+
+
 %As described in the report for week 38, thrust is calculated by the relation:
 
 %\begin{equation}
@@ -1853,26 +1869,25 @@ Net thrust can be approximated by:
 
 \begin{equation}
 \label{eq:ThrustSimple}
-T \approx \dot{m}_a (1+\beta) (V-U)
+T \approx \dot{m}_a (V-U)
 \end{equation}
 
-, where the air exit speed $V$ is usually called Specific Thrust, while $U$ is the flight speed, also called Specific Drag.
+, where $\dot{m}_a$ is the engine air mass flow rate, $V$ is the air exit speed, also called Specific Thrust, while $U$ is the flight speed, also called Specific Drag.
 
 \subsection{Effect of Mach number on Specific Thrust}
 
 With data from figure \ref{fig:CFM56-5B4GasturbTable}, plot of Specific Thrust and Mach number at International Standard Atmosphere, ISA $\Delta T=0$, can be seen in figure \ref{fig:STvsM}.
 The linear function for Specific Thrust was derived to be:
 
+%st = -216.0893.*m + 298.6845;
 \begin{equation}
 \label{eq:SpecificThrust}
-V = 298.68 - 216.08M \quad \mathrm{[m/s]}
+V(M) = 298.68 - 216.09M \quad \mathrm{[m/s]}
 \end{equation}
-
-%st = -216.0893.*m + 298.6845;
 
 \begin{figure}[hb]
     \centering
-    \includegraphics[width=0.7\textwidth]{Epictures/Specific Thrust vs. Mach number.png}
+    \includegraphics[width=1\textwidth]{Epictures/Specific Thrust vs. Mach number.png}
     \caption{Specific Thrust vs. Mach number.}
     \label{fig:STvsM}
 \end{figure}
@@ -1881,7 +1896,7 @@ V = 298.68 - 216.08M \quad \mathrm{[m/s]}
 
 \subsection{Effect of temperature on Specific Thrust}
 
-Conditions with different temperature deviations, $\Delta T$, from ISA are provided at altitudes close to ground.
+Conditions with different temperature deviations, $\Delta T$, from ISA are provided at altitudes close to the ground.
 
 At M=0:
 
@@ -1934,42 +1949,16 @@ $\frac{\Delta V}{\Delta T}(M) \approx (0.5184 - M (0.5184-0.4162)/0.25)$\\
 
 $\Delta V(M) \approx  \Delta T (0.5184 - 0.4090M)$\\
 
-Specific Thrust from equation \ref{eq:SpecificThrust} can then be described as:
+Specific Thrust from equation \ref{eq:SpecificThrust} can then be expanded as:
 
 \begin{equation}
 \label{eq:SpecificThrust2}
-V(M,\Delta T) \approx 298.68 - 216.08M + \Delta T (0.5184 - 0.4090M) \quad \mathrm{[m/s]}
+V(M,\Delta T) \approx 298.68 - 216.09M + \Delta T (0.5184 - 0.4090M) \quad \mathrm{[m/s]}
 \end{equation}
 
 
-\section{Bypass Ratio}
-Bypass Ratio has a significant effect on Thrust, see equation \ref{eq:ThrustSimple}. We can also see in the table that it varies during flight, from 5.20 to 5.89. What affect the Bypass Ratio is not clearly shown by the numbers in the table. A plot showing the Bypass Ratio against many other parameters can be seen in figure \ref{fig:BypassRatio}.
-
-Bypass Ratio is believed to be a function of Angle of Attack.
-
-Airflow through the fan is dependant on the angle between the nozzle and the free stream, while the airflow through the core is not depending on this angle, because the airflow to the core has been redirected by the inlet nozzle. The core will suck all the air it needs, while the rest is bypassed. The fan can also suck in all the air it needs, but if it can do it with less effort, more air will enter the fan and the Bypass Ratio will be higher.
-
-Engine nozzle is slightly pointing down, with a few degrees. Optimum condition is obtained when the airflow is perpendicular to the the nozzle. This seems to happen during initial cruise.
-
-As the weight decreases during cruise, the angle of attack also decreases and the nozzle angle to the airflow becomes less perpendicular. This lowers the Bypass Ratio. Minimum Bypass Ratio seems to happen during low speed climbing, when angle of attack is high and the air flow angle to the inlet nozzle is least perpendicular.
-
-The angle of attack can be derived later, in the project, when the dynamics of the aircraft is modelled. Then we can come back and test if it relates to the Air Mass Flow Rate through the engine.
-
-\begin{figure}[hb]
-    \centering
-    \includegraphics[width=1\textwidth]{Epictures/BetaVsEveryThing.png}
-    \caption{Bypass Ratio.}
-    \label{fig:BypassRatio}
-\end{figure}
-
-\clearpage
-
 \section{Validation}
-To validate equation \ref{eq:SpecificThrust2}, a comparison with the data in figure \ref{fig:CFM56-5B4GasturbTable} is done by calculating the air mass flow rate by $W2 = \frac{Net Thrust}{V(M,\Delta T)} $. The result is shown in figure \ref{fig:MassFlowRateComparison}. Greatest difference occurs at condition 3, where the model made an under prediction of about 4.4\%. We can see that differences are relatively high close to ground, but for conditions where most time is spent, the model shows relatively good accuracy. Maybe we can come back and adjust the model when we know how Bypass Ratio relate to things.
-
-For now, Air Mass Flow Rate through the engine can then be calculated with:
-
-$$W2 = Net Thrust/V(M,\Delta T)$$
+To validate equation \ref{eq:SpecificThrust2}, a comparison with the data in figure \ref{fig:CFM56-5B4GasturbTable} is done by calculating the air mass flow rate by $W2 = \frac{Net Thrust}{V(M,\Delta T)} $. The result is shown in figure \ref{fig:MassFlowRateComparison}. The greatest difference occurs at condition 3, where the model made an under prediction of about 4.4\%. We can see that differences are relatively high close to the ground, but the model shows relatively good accuracy for conditions where most time is spent.
 
 \begin{figure}[hb]
     \centering
@@ -2961,8 +2950,59 @@ The fact that the fuel consumption per passenger and kilometres increases with t
 
 
 \clearpage
-\section{Icing Results}
+\section{Icing Parameters Results}
+\subsection{Climb Case Study}
+According to the Climb Input parameters enlisted in \ref{tab:climb-table}, two sets of data have been resolved. The first set involves the Rime Type, and the latter one involves the Glaze Advanced type of ice formation.
+\subsubsection{Rime Type}
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{IPS/Ice_Shape_Climb_Rime_2D.png}
+    \caption{2D View of Rime Ice Shape in Climb Rime Case using ICE3D}
+    \label{fig:Ice_Shape_Climb_Rime_2D.png}
+\end{figure}
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{IPS/Ice_Shape_Climb_Rime_3D.png}
+    \caption{3D View of Rime Ice Shape in Climb Rime Case using ICE3D}
+    \label{fig:Ice_Shape_Climb_Rime_3D.png}
+\end{figure}
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{IPS/Mass_Caught_Climb_Rime_3D.png}
+    \caption{3D View of Mass Caught in Climb Rime Case using ICE3D}
+    \label{fig:Ice_Shape_Climb_Rime_3D}
+\end{figure}
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{IPS/Mass_Caught_Climb_Rime_2D.png}
+    \caption{Mass Caught in Climb Rime Case using ICE3D}
+    \label{fig:Ice_Shape_Climb_Rime_2D}
+\end{figure}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{IPS/Ice_Density_Climb_Rime_3D.png}
+    \caption{3D View of Ice Density in Climb Rime Case using ICE3D}
+    \label{fig:Ice_Density_Climb_Rime_3D}
+\end{figure}
+\cleardoublepage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{IPS/Ice_Thickness_Climb_Rime_2D.png}
+    \caption{using ICE3D}
+    \label{fig:Ice_Thickness_Climb_Rime_2D}
+\end{figure}
+The colours in the figure \ref{fig:Droplet_Velocity_Magnitude_LWC_DROP3D_Climb_Rime_3D} represent the Droplet Velocity Magnitude.
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{IPS/Droplet_Velocity_Magnitude_LWC_DROP3D_Climb_Rime_3D.png}
+    \caption{Droplet Velocity vectors in Climb Rime Case using DROP3D}
+    \label{fig:Droplet_Velocity_Magnitude_LWC_DROP3D_Climb_Rime_3D}
+\end{figure}
 
+\clearpage
+\subsubsection{Glaze Type}
+\subsection{Descent Case Study}
+According to the Descent Input parameters enlisted in \ref{tab:descent-table}, two sets of data have been resolved. The first set involves the Rime Type, and the latter one involves the Glaze Advanced type of ice formation.
 
 \clearpage
 \section{Ice Protection System Results}
@@ -3343,10 +3383,10 @@ end
 \lstinputlisting[caption={MATLAB Code : Geometry and Mesh Automation using XFoil and Gmsh.}, label=dhruvmatlabcode]{IPS/Dhruv_Part1_rev4_live.M}
 
 
-\lstinputlisting[caption={Iron Python Code for climb case study}, label=dhruvpythoncode1]{IPS/IronPython1.tex}
+\lstinputlisting[caption={Iron Python Code: climb case study}, label=dhruvpythoncode1]{IPS/IronPython1.tex}
 
 
-\lstinputlisting[caption={Sample Iron Python Code block for meshing}, label=dhruvpythoncode2]{IPS/IronPython2.tex}
+\lstinputlisting[caption={Sample Iron Python Code: meshing}, label=dhruvpythoncode2]{IPS/IronPython2.tex}
 
 \clearpage
 \section*{For DIVA}
